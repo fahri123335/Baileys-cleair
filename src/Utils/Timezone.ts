@@ -1,25 +1,35 @@
 import cron from 'node-cron'
 import moment from 'moment-timezone'
 
-moment.tz.setDefault('Asia/Jakarta')
+let currentTz = 'Asia/Jakarta'
+moment.tz.setDefault(currentTz)
 
 export const TimezoneModule = {
-    now: (format: string = 'YYYY-MM-DD HH:mm:ss'): string => {
-        return moment().format(format)
+    setTimezone: (tz: string) => {
+        currentTz = tz
+        moment.tz.setDefault(tz)
     },
 
-    moment: (date?: any) => {
-        return moment(date).tz('Asia/Jakarta')
+    getTimezone: (): string => {
+        return currentTz
+    },
+
+    now: (format: string = 'YYYY-MM-DD HH:mm:ss', customTz?: string): string => {
+        return moment().tz(customTz || currentTz).format(format)
+    },
+
+    moment: (date?: any, customTz?: string) => {
+        return moment(date).tz(customTz || currentTz)
     },
 
     scheduleCron: (
         expression: string, 
         task: () => void, 
-        options: cron.ScheduleOptions = {}
+        options: Record<string, any> = {},
+        customTz?: string
     ) => {
         return cron.schedule(expression, task, {
-            scheduled: true,
-            timezone: 'Asia/Jakarta',
+            timezone: customTz || currentTz,
             ...options
         })
     }

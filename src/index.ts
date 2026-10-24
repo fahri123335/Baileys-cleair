@@ -1,6 +1,6 @@
 import makeWASocket from './Socket/index'
 
-export { Companlib } from './utils/Companlib'
+export { Companlib } from './Utils/Companlib'
 export * from './Socket/index.js'
 export * as callmess from './Socket/VoIP.js'
 export * from './Utils/jid-helper.js'

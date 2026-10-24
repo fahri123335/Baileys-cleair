@@ -1,4 +1,4 @@
-import { transform } from '@napi-rs/image'
+import { Transformer } from '@napi-rs/image'
 import ffmpeg from 'fluent-ffmpeg'
 
 export const MediaModule = {
@@ -12,28 +12,21 @@ export const MediaModule = {
                 format?: 'webp' | 'png' | 'jpeg' 
             } = {}
         ): Promise<Buffer> => {
-            return await transform(buffer, {
-                width: options.width || 512,
-                height: options.height || 512,
-                quality: options.quality || 80,
-                format: options.format || 'webp',
-                fit: 'cover'
-            })
+            const transformer = new Transformer(buffer)
+            return await transformer
+                .resize(options.width || 512, options.height || 512)
+                .webp(options.quality || 80)
         },
 
         toStickerBuffer: async (buffer: Buffer): Promise<Buffer> => {
-            return await transform(buffer, {
-                width: 512,
-                height: 512,
-                quality: 80,
-                format: 'webp',
-                fit: 'contain'
-            })
+            const transformer = new Transformer(buffer)
+            return await transformer
+                .resize(512, 512)
+                .webp(80)
         }
     },
     media: {
         ffmpeg,
-
         toVoiceNote: (inputPath: string, outputPath: string): Promise<string> => {
             return new Promise((resolve, reject) => {
                 ffmpeg(inputPath)
@@ -44,7 +37,6 @@ export const MediaModule = {
                     .on('error', (err) => reject(err))
             })
         },
-
         toGif: (inputPath: string, outputPath: string, fps: number = 15, scale: number = 320): Promise<string> => {
             return new Promise((resolve, reject) => {
                 ffmpeg(inputPath)
@@ -57,7 +49,6 @@ export const MediaModule = {
                     .on('error', (err) => reject(err))
             })
         },
-
         videoToAnimatedSticker: (inputPath: string, outputPath: string): Promise<string> => {
             return new Promise((resolve, reject) => {
                 ffmpeg(inputPath)
