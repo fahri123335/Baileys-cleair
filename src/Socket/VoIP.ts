@@ -1,68 +1,61 @@
-import type { BinaryNode } from '../WABinary/index.js';
+import type { SocketConfig } from '../Types'
+import type { BinaryNode } from '../WABinary'
 
-export interface CallLinkDetails {
-    type: 'voice' | 'video';
-    token: string;
+export interface VoIPCallOfferOptions {
+    callId: string
+    from: string
+    isVideo?: boolean
 }
 
-export const makeVoIPSocket = (sock: any) => {
-    const generateCallLink = (type: 'voice' | 'video', token: string): string => {
-        return `https://call.whatsapp.com/${type}/${token}`;
-    };
-
-    const parseCallLink = (url: string): CallLinkDetails | null => {
-        const regex = /https:\/\/call\.whatsapp\.com\/(voice|video)\/([A-Za-z0-9_-]+)/;
-        const match = url.match(regex);
-        
-        if (!match || !match[1] || !match[2]) return null;
-
-        return {
-            type: match[1] as 'voice' | 'video',
-            token: match[2]
-        };
-    };
-
-    const offerCall = async (jid: string, isVideo: boolean = false) => {
-        const callId = Math.random().toString(36).substring(2, 12);
-        const mediaType = isVideo ? 'video' : 'audio';
-        
-        const callNode: BinaryNode = {
+export const makeVoIPSocket = (config: SocketConfig, query: (node: BinaryNode) => Promise<BinaryNode>) => {
+    
+    const acceptCall = async (callId: string, from: string) => {
+        const node: BinaryNode = {
             tag: 'call',
             attrs: {
-                to: jid,
-                id: sock.generateMessageTag(),
-                from: sock.user?.id || ''
+                to: from,
+                id: callId
             },
             content: [
                 {
-                    tag: 'offer',
+                    tag: 'accept',
                     attrs: {
                         'call-id': callId,
-                        'call-creator': sock.user?.id || ''
+                        'call-creator': from
                     },
-                    content: [
-                        { 
-                            tag: mediaType, 
-                            attrs: { enc: 'opus', rate: '16000' } 
-                        }
-                    ]
+                    content: undefined
                 }
             ]
-        };
+        }
+        return await query(node)
+    }
 
-        await sock.query(callNode);
-        return {
-            callId,
-            type: mediaType,
-            status: 'offered'
-        };
-    };
+    const rejectCall = async (callId: string, from: string) => {
+        const node: BinaryNode = {
+            tag: 'call',
+            attrs: {
+                to: from,
+                id: callId
+            },
+            content: [
+                {
+                    tag: 'reject',
+                    attrs: {
+                        'call-id': callId,
+                        'call-creator': from
+                    },
+                    content: undefined
+                }
+            ]
+        }
+        return await query(node)
+    }
 
     return {
-        ...sock,
-        generateCallLink,
-        parseCallLink,
-        offerCall
-    };
-};
+        acceptCall,
+        rejectCall
+    }
+}
+
+export type VoIPSocket = ReturnType<typeof makeVoIPSocket>
 

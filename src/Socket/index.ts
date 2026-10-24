@@ -1,5 +1,6 @@
 import { DEFAULT_CONNECTION_CONFIG } from '../Defaults/index.js'
 import type { UserFacingSocketConfig } from '../Types/index.js'
+import type { SocketConfig } from '../Types'
 import { makeCommunitiesSocket } from './communities.js'
 import { makeVoIPSocket } from './VoIP.js'
 
@@ -12,7 +13,7 @@ const makeWASocket = (config: UserFacingSocketConfig) => {
 
     // Gabungkan communities socket dengan wrapper VoIP
     const conn = makeCommunitiesSocket(newConfig)
-    return makeVoIPSocket(conn)
+    return makeVoIPSocket(config as SocketConfig, conn.query)
 }
 
 export default makeWASocket

@@ -1,8 +1,8 @@
 import makeWASocket from './Socket/index'
 
-export * from './Socket/index.js';
-export * from './Socket/VoIP.js';
-export * from './Utils/jid-helper.js';
+export * from './Socket/index.js'
+export * as callmess from './Socket/VoIP.js'
+export * from './Utils/jid-helper.js'
 export * from '../WAProto/index.js'
 export * from './Utils/index'
 export * from './Types/index'
