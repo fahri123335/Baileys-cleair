@@ -12,6 +12,11 @@ export * from './WABinary/index'
 export * from './WAM/index'
 export * from './WAUSync/index'
 
+// Pastikan modul auth & version terekspos dengan aman di sini
+export * from './Utils/use-multi-file-auth-state'
+export { fetchLatestBaileysVersion } from './Utils/generics'
+
 export type WASocket = ReturnType<typeof makeWASocket>
 export { makeWASocket }
 export default makeWASocket
+
