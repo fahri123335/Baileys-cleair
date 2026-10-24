@@ -25,12 +25,11 @@ this a fork baileys from indonesian by finn
 ```bash
 npm i baileys-forkd
 
-
 ---
 
-### example code
+## example code
 
-```javascript
+```
 import makeWASocket, { useMultiFileAuthState } from 'baileys->
 
 const { state, saveCreds } = await useMultiFileAuthState('aut>
@@ -41,3 +40,4 @@ const sock = makeWASocket({
 })
 
 sock.ev.on('creds.update', saveCreds)
+```
