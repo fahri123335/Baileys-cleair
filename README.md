@@ -31,7 +31,7 @@ npm i baileys-forkd
 ### example code 
 
 ```javascript 
-import makeWASocket, { useMultiFileAuthState } from 'baileys-forkd'
+import makeWASocket, { useMultiFileAuthState, callmess } from 'baileys-forkd'
 
 const { state, saveCreds } = await useMultiFileAuthState('auth_info')
 
