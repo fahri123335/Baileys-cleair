@@ -1,18 +1,18 @@
 {
-  "name": "baileys",
+  "name": "baileys-fork",
   "type": "module",
-  "version": "7.0.0-rc14",
-  "description": "A WebSockets library for interacting with WhatsApp Web",
+  "version": "1.0.0",
+  "description": "A baileys fork form indonesian by finn",
   "keywords": [
     "whatsapp",
     "automation"
   ],
-  "homepage": "https://github.com/WhiskeySockets/Baileys/",
+  "homepage": "https://github.com/fahri123335/Baileys-fork",
   "repository": {
-    "url": "git@github.com:WhiskeySockets/Baileys.git"
+    "url": "git@github.com:fahri123335/Baileys-fork.git"
   },
   "license": "MIT",
-  "author": "Rajeh Taher",
+  "author": "finn",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
