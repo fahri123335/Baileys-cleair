@@ -1,38 +1,37 @@
 # 乂 BAILEYS - FORKD 乂
 
----
-
-this a fork baileys from indonesian by finn
+A fork of Baileys, made in Indonesia by Finn.
 
 ---
 
-### features
+## Features
 
-- **support voip**
-- **Advances jid & lid**
-
----
-
-### requitments
-
-- **Node js +20**
-- **Type esm/module es**
+- **VoIP support**
+- **Advanced JID & LID support**
 
 ---
 
-### tutorial installation
+## Requirements
+
+- **Node.js 20+**
+- **ES Modules** (`"type": "module"` in your `package.json`)
+
+---
+
+## Installation
 
 ```bash
 npm i baileys-forkd
+```
 
 ---
 
-## example code
+## Example
 
-```
-import makeWASocket, { useMultiFileAuthState } from 'baileys->
+```javascript
+import makeWASocket, { useMultiFileAuthState } from 'baileys-forkd'
 
-const { state, saveCreds } = await useMultiFileAuthState('aut>
+const { state, saveCreds } = await useMultiFileAuthState('auth_info')
 
 const sock = makeWASocket({
     auth: state,
