@@ -1,7 +1,4 @@
-# 乂 BAILEYS - FORKD 乂
-
----
-
+# 乂 BAILEYS-FORKD 乂
 this a fork baileys from indonesian by finn 
 
 ---
